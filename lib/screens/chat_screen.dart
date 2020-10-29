@@ -26,12 +26,16 @@ class _ChatScreenState extends State<ChatScreen> {
       appBar: AppBar(
         leading: null,
         actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.close),
-              onPressed: () async {
-                await _auth.signOut();
-                Navigator.pop(context);
-              }),
+          FlatButton(
+            onPressed: () async {
+              await _auth.signOut();
+              Navigator.pop(context);
+            },
+            child: Text(
+              "Logout",
+              style: TextStyle(color: Colors.white, fontSize: 16.0),
+            ),
+          )
         ],
         title: Text('⚡️Chat'),
         backgroundColor: Colors.lightBlueAccent,
@@ -54,7 +58,8 @@ class _ChatScreenState extends State<ChatScreen> {
                       decoration: kMessageTextFieldDecoration,
                     ),
                   ),
-                  FlatButton(
+                  MaterialButton(
+                    color: Colors.lightBlueAccent,
                     onPressed: () {
                       //Implement send functionality.
                     },

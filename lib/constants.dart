@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 const kTagLogo = "logo";
 
 const kSendButtonTextStyle = TextStyle(
-  color: Colors.lightBlueAccent,
+  color: Colors.white,
   fontWeight: FontWeight.bold,
   fontSize: 18.0,
 );
