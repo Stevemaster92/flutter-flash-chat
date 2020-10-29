@@ -3,18 +3,24 @@ import 'package:flutter/material.dart';
 class RoundedTextField extends StatelessWidget {
   final String hintText;
   final Color borderColor;
+  final bool obscureText;
+  final TextInputType keyboardType;
   final Function onChanged;
 
   const RoundedTextField({
     Key key,
     this.hintText = "",
     this.borderColor = Colors.lightBlueAccent,
+    this.obscureText = false,
+    this.keyboardType,
     @required this.onChanged,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      obscureText: obscureText,
+      keyboardType: keyboardType,
       onChanged: onChanged,
       decoration: InputDecoration(
         hintText: hintText,
