@@ -18,6 +18,29 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   bool _loading = false;
 
+  void submit() async {
+    setState(() {
+      _loading = true;
+    });
+
+    try {
+      final user = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      if (user != null) {
+        Navigator.pushNamed(context, ChatScreen.ROUTE);
+      }
+    } catch (e) {
+      print(e);
+    }
+
+    setState(() {
+      _loading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,11 +53,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Hero(
-                tag: kTagLogo,
-                child: Container(
-                  height: 200.0,
-                  child: Image.asset('images/logo.png'),
+              Flexible(
+                child: Hero(
+                  tag: kTagLogo,
+                  child: Container(
+                    height: 200.0,
+                    child: Image.asset('images/logo.png'),
+                  ),
                 ),
               ),
               SizedBox(height: 48.0),
@@ -50,33 +75,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 hintText: "Enter your password",
                 borderColor: Colors.blueAccent,
                 onChanged: (value) => password = value,
+                onSubmitted: (value) => submit(),
               ),
               SizedBox(height: 24.0),
               RoundedButton(
                 color: Colors.blueAccent,
                 title: "Register",
-                onPressed: () async {
-                  setState(() {
-                    _loading = true;
-                  });
-
-                  try {
-                    final user = await _auth.createUserWithEmailAndPassword(
-                      email: email,
-                      password: password,
-                    );
-
-                    if (user != null) {
-                      Navigator.pushNamed(context, ChatScreen.ROUTE);
-                    }
-                  } catch (e) {
-                    print(e);
-                  }
-
-                  setState(() {
-                    _loading = false;
-                  });
-                },
+                onPressed: submit,
               ),
             ],
           ),

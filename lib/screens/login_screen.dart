@@ -19,6 +19,29 @@ class _LoginScreenState extends State<LoginScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   bool _loading = false;
 
+  void submit() async {
+    setState(() {
+      _loading = true;
+    });
+
+    try {
+      final user = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      if (user != null) {
+        Navigator.pushNamed(context, ChatScreen.ROUTE);
+      }
+    } catch (e) {
+      print(e);
+    }
+
+    setState(() {
+      _loading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,11 +54,13 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Hero(
-                tag: kTagLogo,
-                child: Container(
-                  height: 200.0,
-                  child: Image.asset('images/logo.png'),
+              Flexible(
+                child: Hero(
+                  tag: kTagLogo,
+                  child: Container(
+                    height: 200.0,
+                    child: Image.asset('images/logo.png'),
+                  ),
                 ),
               ),
               SizedBox(height: 48.0),
@@ -49,33 +74,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 obscureText: true,
                 hintText: "Enter your password",
                 onChanged: (value) => password = value,
+                onSubmitted: (value) => submit(),
               ),
               SizedBox(height: 24.0),
               RoundedButton(
                 color: Colors.lightBlueAccent,
                 title: "Login",
-                onPressed: () async {
-                  setState(() {
-                    _loading = true;
-                  });
-
-                  try {
-                    final user = await _auth.signInWithEmailAndPassword(
-                      email: email,
-                      password: password,
-                    );
-
-                    if (user != null) {
-                      Navigator.pushNamed(context, ChatScreen.ROUTE);
-                    }
-                  } catch (e) {
-                    print(e);
-                  }
-
-                  setState(() {
-                    _loading = false;
-                  });
-                },
+                onPressed: submit,
               ),
             ],
           ),

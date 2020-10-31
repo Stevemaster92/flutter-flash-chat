@@ -6,6 +6,7 @@ class RoundedTextField extends StatelessWidget {
   final bool obscureText;
   final TextInputType keyboardType;
   final Function onChanged;
+  final Function(String value) onSubmitted;
 
   const RoundedTextField({
     Key key,
@@ -14,6 +15,7 @@ class RoundedTextField extends StatelessWidget {
     this.obscureText = false,
     this.keyboardType,
     @required this.onChanged,
+    this.onSubmitted,
   }) : super(key: key);
 
   @override
@@ -22,9 +24,9 @@ class RoundedTextField extends StatelessWidget {
       obscureText: obscureText,
       keyboardType: keyboardType,
       onChanged: onChanged,
+      onSubmitted: onSubmitted,
       decoration: InputDecoration(
         hintText: hintText,
-        // hintStyle: TextStyle(color: Colors.white),
         contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(32.0)),
