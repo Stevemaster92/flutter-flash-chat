@@ -208,7 +208,9 @@ class MessageBubble extends StatelessWidget {
                   Text(
                     DateFormat("HH:mm").format(dateTime),
                     textAlign: TextAlign.right,
-                    style: kMessageSubTextStyle.copyWith(color: Colors.white54),
+                    style: kMessageSubTextStyle.copyWith(
+                      color: isMe ? Colors.white54 : Colors.black45,
+                    ),
                   )
                 ],
               ),
